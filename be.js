@@ -83,12 +83,11 @@ function disableButtons() {
     document.getElementById("notWantButton").disabled = true;
 }
 
-// 在生死簿上添加消息并上传到 OSS
+// 在生死簿上添加消息
 function addMessageToOSS(message) {
     var messageBoard = document.getElementById("message-board");
     var messageItem = document.createElement("div");
     messageItem.classList.add("message-item");
     messageItem.innerText = message;
     messageBoard.appendChild(messageItem);
-    };
 }
