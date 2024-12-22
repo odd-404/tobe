@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8"> <!-- 设置字符编码为 UTF-8 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 设置视口，适应手机端 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- 兼容IE浏览器 -->
+    <title>tobe?</title> <!-- 网页标题，显示在浏览器标签栏上 -->
+
+    <!-- 引入外部CSS样式表 -->
+    <link rel="stylesheet" href="be.css">
+</head>
+
+<body>
+    <main>
+        <div class="container">
+            <h1>张嘉旺今天想活了吗?</h1>
+            <img src="https://web-framework-odd-01.oss-cn-hangzhou.aliyuncs.com/%E6%80%9D%E8%80%83.png
+            " alt="思考图片" class="header-image">
+            <!-- 按钮样式，按钮之间有较大的间距 -->
+             <p></p>
+            <div class="input-area">
+                <button class="btn" onclick="askConfirmation('想')">想</button>
+                <button class="btn" onclick="askConfirmation('不想')">不想</button>
+            </div>
+
+            <!-- 弹窗 -->
+            <div id="modal" class="modal">
+                <div class="modal-content">
+                    <span class="modal-close" onclick="closeModal()">&times;</span>
+                    <h2 id="modal-title"></h2>
+                    <textarea id="reason-input" placeholder="没有就直接提交......"></textarea><br>
+                    <button onclick="submitReason()">提交</button>
+                </div>
+            </div>
+
+
+            <!-- 显示响应信息的区域 -->
+            <div id="response" style="display: none;">
+                <!-- 响应图片和消息会被动态显示 -->
+            </div>
+
+            <!-- 生死簿消息区 -->
+            <div id="message-board">
+                <!-- 遗言会被动态添加到这里 -->
+            </div>
+        </div>
+    </main>
+    <!-- 引入阿里云 OSS SDK -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aliyun-oss-sdk/6.4.1/aliyun-oss-sdk.min.js"></script>
+    <!-- 引入外部JavaScript文件 -->
+    <script src="be.js"></script>
+</body>
+
+</html>
