@@ -2,6 +2,14 @@
 var userAnswer = ""; // 记录用户的选择
 var hasAnsweredToday = false; // 标记用户是否已经选择过
 
+// 初始化 OSS 客户端
+var client = new OSS({
+    region: 'oss-cn-hangzhou',  // 设置你自己的地区
+    accessKeyId: 'LTAI5t5oYYFzJ2vYHgm1eS1w',
+    accessKeySecret: '8sOY3mrW8VtPL90uALVfe7aMNLnuwG',
+    bucket: 'web-framework-odd-01'
+});
+
 // 获取今天的日期
 function getTodayDate() {
     var today = new Date();
@@ -83,11 +91,51 @@ function disableButtons() {
     document.getElementById("notWantButton").disabled = true;
 }
 
-// 在生死簿上添加消息
-function addMessageToOSS(message) {
+// 在生死簿上添加消息并上传到 OSS
+function addMessage(message) {
     var messageBoard = document.getElementById("message-board");
     var messageItem = document.createElement("div");
     messageItem.classList.add("message-item");
     messageItem.innerText = message;
     messageBoard.appendChild(messageItem);
+
+    // 生成当前日期
+    var todayDate = new Date().toISOString().split('T')[0];  // 获取YYYY-MM-DD格式
+
+    // 构建存储的文件内容
+    var messageData = {
+        date: todayDate,
+        message: message
+    };
+
+    // 将消息转换为 JSON 格式
+    var messageJSON = JSON.stringify(messageData);
+
+    // 上传文件到 OSS
+    client.put('messages/' + todayDate + '.json', new Blob([messageJSON], { type: 'text/plain' }))
+        .then(function (result) {
+            console.log('Message uploaded to OSS:', result);
+        })
+        .catch(function (err) {
+            console.error('Failed to upload message to OSS:', err);
+        });
+}
+
+// 从 OSS 获取消息数据并展示
+function loadMessagesFromOSS() {
+    client.get('messages/messages.json')
+        .then(function (result) {
+            // 获取到文件内容后，解析并展示
+            var messages = JSON.parse(result.content);
+            var messageBoard = document.getElementById("message-board");
+            messages.forEach(function (message) {
+                var messageItem = document.createElement("div");
+                messageItem.classList.add("message-item");
+                messageItem.innerText = message.message;
+                messageBoard.appendChild(messageItem);
+            });
+        })
+        .catch(function (err) {
+            console.error('Failed to load messages from OSS:', err);
+        });
 }
