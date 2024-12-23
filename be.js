@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
-import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
+import { getDatabase, ref, push, set, onValue } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
 
 // 配置 Firebase
 const firebaseConfig = {
@@ -22,6 +22,7 @@ var hasAnsweredToday = false; // 标记用户是否已经选择过
 
 // 获取今天的日期，格式化日期为 xxxx/xx/xx xx:xx
 function getTodayDate() {
+     const formattedDate = new Date(); // 创建日期对象
      var year = formattedDate.getFullYear();
      var month = formattedDate.getMonth() + 1;
       var day = formattedDate.getDate();
@@ -37,19 +38,18 @@ function getTodayDate() {
     return  year + '/' + month + '/' + day + ' ' + hours + ':' + minutes;
 }
 
-// 检查是否已经选择过
+// 检查今天是否已经回答
 function checkAnsweredStatus() {
     var today = getTodayDate().split(' ')[0]; // 提取年月日部分
+    const answeredRef = ref(db, 'answered/' + today);
     return new Promise((resolve, reject) => {
-        db.ref('answered/' + today).once('value', function(snapshot) {
+        onValue(answeredRef, (snapshot) => {
             const answer = snapshot.val();
-            if (answer) {
-                hasAnsweredToday = true;
-            }
-            resolve(hasAnsweredToday); // 传递结果
-        }, function(error) {
-            console.error('Error checking answered status:', error);
-            reject(error); // 错误时返回
+            hasAnsweredToday = !!answer;
+            resolve(hasAnsweredToday);
+        }, (error) => {
+            console.error('检查回答状态时出错:', error);
+            reject(error);
         });
     });
 }
@@ -162,7 +162,6 @@ function addMessage(message) {
 
 // 从 Firebase 获取消息数据并展示
 function loadMessagesFromFirebase() {
-    const db = getDatabase();
     const messagesRef = ref(db, 'messages');
 
     // 使用 onValue 监听数据库的变化
@@ -184,8 +183,8 @@ function loadMessagesFromFirebase() {
                 messageBoard.appendChild(messageItem);
             }
         }
-    }, function(error) {
-        console.error('Error fetching messages from Firebase:', error);
+    }, (error) => {
+        console.error('从 Firebase 获取消息时出错:', error);
     });
 }
 
