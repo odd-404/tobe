@@ -20,9 +20,10 @@
             
              <p></p>
            <!-- 按钮样式，按钮之间有较大的间距 -->
-            <button class="btn" id="wantButton" onclick="askConfirmation('想')">想</button>
-            <button class="btn" id="notWantButton" onclick="askConfirmation('不想')">不想</button>
-
+            <div class="button-container">
+                <button class="btn" id="wantButton" onclick="askConfirmation('想')">想</button>
+                <button class="btn" id="notWantButton" onclick="askConfirmation('不想')">不想</button>
+            </div>
             <!-- 弹窗 -->
             <div id="modal" class="modal">
                 <div class="modal-content">
