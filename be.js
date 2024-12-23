@@ -78,6 +78,7 @@ function delay(ms) {
 
 // 提交原因
 async function submitReason() {
+    console.log("提交原因逻辑执行");
     // 关闭弹窗
     closeModal();  // 调用关闭弹窗的函数
     hasAnsweredToday = true; // 标记已经选择过
@@ -123,6 +124,7 @@ async function submitReason() {
 
 // 关闭弹窗
 function closeModal() {
+    console.log("关闭弹窗逻辑执行");
     document.getElementById("modal").style.display = "none";
 }
 
@@ -201,5 +203,7 @@ window.onload = () => {
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("wantButton").addEventListener("click", () => askConfirmation("想"));
     document.getElementById("notWantButton").addEventListener("click", () => askConfirmation("不想"));
+    document.getElementById("closeModalButton").addEventListener("click", closeModal);
+    document.getElementById("submitReasonButton").addEventListener("click", submitReason);
 });
 
