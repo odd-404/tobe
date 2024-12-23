@@ -47,28 +47,30 @@ function checkAnsweredStatus() {
 
 // 用户确认选择
 function askConfirmation(answer) {
-    if (hasAnsweredToday) {
-        alert("你今天已经做出选择啦！");
-        return; // 防止重复选择
-  }
+    checkAnsweredStatus().then((hasAnsweredToday) => {
+        if (hasAnsweredToday) {
+            alert("你今天已经做出选择啦！");
+            return; // 防止重复选择
+        }
 
-    userAnswer = answer; // 记录用户的选择
-    var todayDate = getTodayDate(); // 获取今天的日期
-    // 如果是“不想”，弹出确认框
-    if (userAnswer === '不想') {
-        var confirmAnswer = confirm("你确定?");
-        if (confirmAnswer) {
+        userAnswer = answer; // 记录用户的选择
+        var todayDate = getTodayDate(); // 获取今天的日期
+
+        // 如果是“不想”，弹出确认框
+        if (userAnswer === '不想') {
+            var confirmAnswer = confirm("你确定?");
+            if (confirmAnswer) {
+                // 隐藏按钮并显示弹窗
+                document.getElementById("modal").style.display = "block";
+                document.getElementById("modal-title").innerText = "为什么呢?";
+            }
+        } else if (userAnswer === '想') {
             // 隐藏按钮并显示弹窗
             document.getElementById("modal").style.display = "block";
             document.getElementById("modal-title").innerText = "为什么呢?";
         }
-    } else if (userAnswer === '想') {
-        // 隐藏按钮并显示弹窗
-        document.getElementById("modal").style.display = "block";
-        document.getElementById("modal-title").innerText = "为什么呢?";
-    }
 
-     // 如果用户做出选择，记录到数据库
+        // 如果用户做出选择，记录到数据库
         const today = getTodayDate().split(' ')[0];
         set(ref(db, 'answered/' + today), true); // 记录今天的选择
     }).catch((error) => {
