@@ -43,14 +43,17 @@ function getTodayDate() {
 // 检查是否已经选择过
 function checkAnsweredStatus() {
     var today = getTodayDate().split(' ')[0]; // 提取年月日部分
-    // 从 Firebase 获取今天是否已经选择
-    db.ref('answered/' + today).once('value', function(snapshot) {
-        const answer = snapshot.val();
-        if (answer) {
-            hasAnsweredToday = true;
-        }
-    }, function(error) {
-        console.error('Error checking answered status:', error);
+    return new Promise((resolve, reject) => {
+        db.ref('answered/' + today).once('value', function(snapshot) {
+            const answer = snapshot.val();
+            if (answer) {
+                hasAnsweredToday = true;
+            }
+            resolve(hasAnsweredToday); // 传递结果
+        }, function(error) {
+            console.error('Error checking answered status:', error);
+            reject(error); // 错误时返回
+        });
     });
 }
 
@@ -183,6 +186,12 @@ function loadMessagesFromFirebase() {
 
 // 页面加载时自动获取消息并展示
 window.onload = function() {
-    checkAnsweredStatus();  // 检查是否已经回答过
+    checkAnsweredStatus().then(hasAnswered => {
+        if (hasAnswered) {
+            console.log("今天已经回答过了！");
+        } else {
+            console.log("今天还未回答！");
+        }
+    });
     loadMessagesFromFirebase();  // 加载 Firebase 中的消息
 }
