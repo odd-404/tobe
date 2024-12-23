@@ -66,12 +66,19 @@ function askConfirmation(answer) {
     }
 }
 
+// 创建一个延迟的函数
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 // 提交原因
 function submitReason() {
     // 关闭弹窗
     closeModal();  // 调用关闭弹窗的函数
     hasAnsweredToday = true; // 标记已经选择过
 
+  // 延迟 1 秒
+    await delay(1000);
     // 显示图片和消息
     if (userAnswer === '想') {
         // 显示“好狗狗好狗狗”并插入图片
@@ -93,6 +100,8 @@ function submitReason() {
     var todayDate = getTodayDate();
     db.ref('answered/' + todayDate).set(userAnswer);
 
+    // 延迟 2 秒
+    await delay(2000);
     //添加到生死簿
     var reason = document.getElementById("reason-input").value.trim();
     var message = (userAnswer === "想" ? todayDate + " 张嘉旺还活着" : todayDate + " 张嘉旺莫名其妙地死了");
