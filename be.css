@@ -1,3 +1,14 @@
+body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    main {
+        padding: 20px;
+    }
 /* 页面容器 */
 .container {
     width: 85%; /* 容器宽度稍微调整为85% */
@@ -72,6 +83,8 @@ h2 {
 }
 
 #message-board {
+    margin-top: 40px;
+    padding: 20px;
     color: #666666;           /* 浅灰色字体 */
     letter-spacing: 1px;      /* 字符间隔稍大一点 */
     margin: 0 auto;           /* 居中容器 */
@@ -198,6 +211,8 @@ h2 {
     }
 
     #message-board {
+        margin-top: 40px;
+        padding: 20px;
         color: #666666;           /* 浅灰色字体 */
         letter-spacing: 1px;      /* 字符间隔稍大一点 */
         margin: 0 auto;           /* 居中容器 */
