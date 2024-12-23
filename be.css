@@ -180,4 +180,12 @@ h2 {
     .response-image {
         width: 200px; /* 调整响应图片的最大宽度 */
     }
+
+    .button-container {
+    display: flex; /* 启用 flex 布局 */
+    justify-content: center; /* 按钮居中对齐 */
+    gap: 15px; /* 设置按钮之间的间距 */
+    flex-wrap: nowrap; /* 防止按钮换行 */
+    align-items: center; /* 垂直居中对齐 */
+    }
 }
