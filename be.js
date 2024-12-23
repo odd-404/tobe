@@ -14,7 +14,6 @@ const firebaseConfig = {
 
 
 var userAnswer = ""; // 记录用户的选择
-var hasAnsweredToday = false; // 标记用户是否已经选择过
 
 
 // 获取今天的日期，格式化日期为 xxxx/xx/xx xx:xx
@@ -37,7 +36,7 @@ function checkAnsweredStatus() {
     return new Promise((resolve, reject) => {
         onValue(answeredRef, (snapshot) => {
             const answer = snapshot.val();
-            hasAnsweredToday = !!answer;
+            const hasAnsweredToday = !!answer;  // 如果存在数据，则认为今天已经回答
             resolve(hasAnsweredToday);
         }, (error) => {
             console.error('检查回答状态时出错:', error);
