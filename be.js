@@ -1,13 +1,21 @@
 var userAnswer = ""; // 记录用户的选择
 var hasAnsweredToday = false; // 标记用户是否已经选择过
 
-// 初始化 OSS 客户端
-var client = new OSS({
-    region: 'oss-cn-hangzhou',  // 设置你自己的地区
-    accessKeyId: 'LTAI5t5oYYFzJ2vYHgm1eS1w',
-    accessKeySecret: '8sOY3mrW8VtPL90uALVfe7aMNLnuwG',
-    bucket: 'web-framework-odd-01'
-});
+// 配置 Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyCeuW4TN7TpDpSNrno9FMfxh3RdrYLjm6o",
+  authDomain: "tobe-odd.firebaseapp.com",
+  projectId: "tobe-odd",
+  storageBucket: "tobe-odd.firebasestorage.app",
+  messagingSenderId: "264520250425",
+  appId: "1:264520250425:web:888f22708fd987135989e8",
+  measurementId: "G-XJKZLKD1KJ"
+};
+
+// 初始化 Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
 
 // 获取今天的日期
 function getTodayDate() {
@@ -98,7 +106,8 @@ function closeModal() {
     document.getElementById("modal").style.display = "none";
 }
 
-// 在生死簿上添加消息并上传到 OSS
+
+// 在生死簿上添加消息并上传到 Firebase
 function addMessage(message) {
     var messageBoard = document.getElementById("message-board");
     var messageItem = document.createElement("div");
@@ -106,55 +115,42 @@ function addMessage(message) {
     messageItem.innerText = message;
     messageBoard.appendChild(messageItem);
 
-    // 获取现有消息并添加新消息
-    client.get('messages/messages.json')
-        .then(function (result) {
-            var messages = [];
-            try {
-                messages = JSON.parse(result.content);  // 获取现有消息并解析
-            } catch (e) {
-                console.error('Failed to parse existing messages:', e);
-            }
+    // 获取当前日期
+    var todayDate = new Date().toISOString().split('T')[0];
+    var newMessage = {
+        date: todayDate,
+        message: message
+    };
 
-            // 生成当前日期并添加新的消息
-            var todayDate = new Date().toISOString().split('T')[0];
-            var newMessage = {
-                date: todayDate,
-                message: message
-            };
-            messages.push(newMessage);
-
-            // 将消息数组更新为 JSON 格式
-            var updatedMessageJSON = JSON.stringify(messages);
-
-            // 上传更新后的消息到 OSS
-            return client.put('messages/messages.json', new Blob([updatedMessageJSON], { type: 'application/json' }));
-        })
-        .then(function (result) {
-            console.log('Messages updated and uploaded to OSS:', result);
+    // 将新消息添加到 Firebase Realtime Database
+    db.ref('messages').push(newMessage)
+        .then(function () {
+            console.log('Message added to Firebase');
         })
         .catch(function (err) {
-            console.error('Failed to update messages:', err);
+            console.error('Failed to add message:', err);
         });
 }
 
-// 从 OSS 获取消息数据并展示
-function loadMessagesFromOSS() {
-    client.get('messages/messages.json')
-        .then(function (result) {
-            // 获取到文件内容后，解析并展示
-            var messages = JSON.parse(result.content);
-            var messageBoard = document.getElementById("message-board");
-            messages.forEach(function (message) {
+// 从 Firebase 获取消息数据并展示
+function loadMessagesFromFirebase() {
+    db.ref('messages').on('value', function(snapshot) {
+        const messages = snapshot.val();
+        const messageBoard = document.getElementById("message-board");
+        messageBoard.innerHTML = "";  // 清空当前显示的消息
+
+        for (let key in messages) {
+            if (messages.hasOwnProperty(key)) {
+                const message = messages[key];
                 var messageItem = document.createElement("div");
                 messageItem.classList.add("message-item");
                 messageItem.innerText = message.message;
                 messageBoard.appendChild(messageItem);
-            });
-        })
-        .catch(function (err) {
-            console.error('Failed to load messages from OSS:', err);
-        });
+            }
+        }
+    }, function(error) {
+        console.error('Error fetching messages from Firebase:', error);
+    });
 }
 
 // 页面加载时检查是否已选择
