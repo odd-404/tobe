@@ -49,18 +49,18 @@
     <!-- 引入 Firebase SDK -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
-  import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
+  import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
 
   // 配置 Firebase
-  const firebaseConfig = {
-    apiKey: "你的apiKey",
-    authDomain: "你的项目ID.firebaseapp.com",
-    databaseURL: "https://你的项目ID.firebaseio.com",
-    projectId: "你的项目ID",
-    storageBucket: "你的项目ID.appspot.com",
-    messagingSenderId: "你的Sender ID",
-    appId: "你的appId"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyCeuW4TN7TpDpSNrno9FMfxh3RdrYLjm6o",
+  authDomain: "tobe-odd.firebaseapp.com",
+  projectId: "tobe-odd",
+  storageBucket: "tobe-odd.firebasestorage.app",
+  messagingSenderId: "264520250425",
+  appId: "1:264520250425:web:888f22708fd987135989e8",
+  measurementId: "G-XJKZLKD1KJ"
+};
 
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
