@@ -31,8 +31,8 @@ h1 {
 
 /* 按钮样式 */
 .btn {
-    padding: 10px 25px; /* 增大按钮的尺寸 */
-    font-size: 24px; /* 增大字体大小 */
+    padding: 8px 25px; /* 增大按钮的尺寸 */
+    font-size: 20px; /* 增大字体大小 */
     margin: 15px 30px; /* 增加按钮之间的间距 */
     border-radius: 8px; /* 可以适当调整圆角 */
     cursor: pointer;
@@ -60,26 +60,6 @@ h1 {
     margin: 15px auto; /* 图片居中显示并增加间距 */
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* 确保页面元素在小屏幕上良好显示 */
-@media (max-width: 768px) {
-    .container {
-        width: 90%; /* 小屏幕下容器宽度稍微调整为90% */
-    }
-
-    h1 {
-        font-size: 30px; /* 在小屏幕下调整标题字体 */
-    }
-
-    .btn {
-        padding: 10px 25px; /* 缩小按钮尺寸 */
-        font-size: 24px; /* 调整按钮字体 */
-    }
-
-    .response-image {
-        width: 200px; /* 在小屏幕下缩小图片尺寸 */
-    }
 }
 
 /* 副标题 */
