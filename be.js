@@ -55,19 +55,14 @@ function askConfirmation(answer) {
 
 // 提交原因
 function submitReason() {
-    var reason = document.getElementById("reason-input").value.trim();
-    var todayDate = getTodayDate(); // 获取今天的日期
+    // 关闭弹窗
+    closeModal();  // 调用关闭弹窗的函数
+    hasAnsweredToday = true; // 标记已经选择过
 
-    // 如果没有输入，使用默认的消息
-    var message = (userAnswer === "想" ? todayDate + " 张嘉旺还活着" : todayDate + " 张嘉旺莫名其妙地死了");
+    // 禁用按钮
+    disableButtons();
 
-    if (reason !== "") {
-        // 在生死簿中添加消息
-        message = (userAnswer === "想" ? todayDate + " 张嘉旺因" + reason + "而幸存!" : todayDate + " 张嘉旺因" + reason + "而死.");
-    }
-
-    addMessage(message);
-
+    
     // 显示图片和消息
     if (userAnswer === '想') {
         // 显示“好狗狗好狗狗”并插入图片
@@ -88,12 +83,19 @@ function submitReason() {
     // 保存用户选择到本地存储
     localStorage.setItem('answered_' + todayDate, userAnswer);
 
-    // 关闭弹窗
-    closeModal();  // 调用关闭弹窗的函数
-    hasAnsweredToday = true; // 标记已经选择过
+    //添加到生死簿
+    var reason = document.getElementById("reason-input").value.trim();
+    var todayDate = getTodayDate(); // 获取今天的日期
 
-    // 禁用按钮
-    disableButtons();
+    // 如果没有输入，使用默认的消息
+    var message = (userAnswer === "想" ? todayDate + " 张嘉旺还活着" : todayDate + " 张嘉旺莫名其妙地死了");
+
+    if (reason !== "") {
+        // 在生死簿中添加消息
+        message = (userAnswer === "想" ? todayDate + " 张嘉旺因" + reason + "而幸存!" : todayDate + " 张嘉旺因" + reason + "而死.");
+    }
+
+    addMessage(message);
 }
 
 // 关闭弹窗
