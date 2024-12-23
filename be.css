@@ -16,7 +16,7 @@
 h1 {
     color: rgb(47, 47, 67);
     font-family: 'Arial', sans-serif;
-    font-size: 32px; /* 减小字体大小，避免标题占用过多空间 */
+    font-size: 36px; /* 减小字体大小，避免标题占用过多空间 */
     margin-bottom: 15px; /* 调整底部间距 */
     text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1); /* 适当的文字阴影 */
 }
@@ -31,7 +31,7 @@ h1 {
 
 /* 按钮样式 */
 .btn {
-    padding: 10px 20px; /* 增大按钮的尺寸 */
+    padding: 10px 25px; /* 增大按钮的尺寸 */
     font-size: 24px; /* 增大字体大小 */
     margin: 15px 30px; /* 增加按钮之间的间距 */
     border-radius: 8px; /* 可以适当调整圆角 */
@@ -69,12 +69,12 @@ h1 {
     }
 
     h1 {
-        font-size: 24px; /* 在小屏幕下调整标题字体 */
+        font-size: 30px; /* 在小屏幕下调整标题字体 */
     }
 
     .btn {
-        padding: 10px 20px; /* 缩小按钮尺寸 */
-        font-size: 18px; /* 调整按钮字体 */
+        padding: 10px 25px; /* 缩小按钮尺寸 */
+        font-size: 24px; /* 调整按钮字体 */
     }
 
     .response-image {
