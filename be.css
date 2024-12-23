@@ -1,21 +1,77 @@
 /* 页面容器 */
 .container {
-    width: 80%;
+    width: 85%; /* 容器宽度稍微调整为85% */
+    max-width: 900px; /* 限制最大宽度，避免容器过宽 */
     margin: 0 auto;
     text-align: center;
-    background-color: #f9f9f9; /* 添加背景色 */
-    border-radius: 10px; /* 圆角 */
-    padding: 30px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 20px; /* 缩小内边距 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    overflow: hidden; /* 防止内容溢出 */
 }
 
 /* 标题样式 */
 h1 {
     color: rgb(47, 47, 67);
     font-family: 'Arial', sans-serif;
-    font-size: 32px; /* 增大字体 */
-    margin-bottom: 20px; /* 底部间距 */
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* 文字阴影效果 */
+    font-size: 24px; /* 减小字体大小，避免标题占用过多空间 */
+    margin-bottom: 15px; /* 调整底部间距 */
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1); /* 适当的文字阴影 */
+}
+
+/* 按钮样式 */
+.btn {
+    padding: 10px 20px; /* 适当增加按钮的尺寸 */
+    font-size: 16px; /* 调整按钮字体大小 */
+    margin: 10px 25px; /* 增加按钮之间的间距 */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.btn:hover {
+    background-color: #d5d1d4; /* 鼠标悬停时改变按钮颜色 */
+    transform: scale(1.05); /* 鼠标悬停时放大按钮 */
+}
+
+/* 图片样式 */
+.header-image {
+    width: 120px; /* 控制图片宽度，避免图片过大 */
+    height: auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-radius: 90%;
+}
+
+/* 响应图片 */
+.response-image {
+    width: 250px; /* 控制图片的最大宽度 */
+    height: auto;
+    display: block;
+    margin: 15px auto; /* 图片居中显示并增加间距 */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 确保页面元素在小屏幕上良好显示 */
+@media (max-width: 768px) {
+    .container {
+        width: 90%; /* 小屏幕下容器宽度稍微调整为90% */
+    }
+
+    h1 {
+        font-size: 20px; /* 在小屏幕下调整标题字体 */
+    }
+
+    .btn {
+        padding: 8px 16px; /* 缩小按钮尺寸 */
+        font-size: 14px; /* 调整按钮字体 */
+    }
+
+    .response-image {
+        width: 200px; /* 在小屏幕下缩小图片尺寸 */
+    }
 }
 
 /* 副标题 */
@@ -25,40 +81,6 @@ h2 {
     font-size: 24px; /* 调整为较大的字体 */
     margin-top: 30px;
     font-weight: bold;
-}
-
-/* 按钮样式 */
-.btn {
-    padding: 8px 25px; /* 增加按钮的大小 */
-    font-size: 18px; /* 增大字体 */
-    margin: 15px 50px; /* 增加按钮之间的间距 */
-    border-radius: 5px; /* 圆角 */
-    cursor: pointer;
-    transition: all 0.3s ease; /* 平滑过渡 */
-}
-
-.btn:hover {
-    background-color: #d5d1d4; /* 鼠标悬停时改变按钮颜色 */
-    transform: scale(1.05); /* 鼠标悬停时放大按钮 */
-}
-
-/* 图片样式 */
-.header-image {
-    width: 150px; /* 图片稍微增大 */
-    height: auto;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border-radius: 90%; /* 图片圆角 */
-}
-
-/* 响应图片 */
-.response-image {
-    width: 275px;
-    height: auto;
-    display: block;
-    margin: 20px auto; /* 图片居中并增加上下间距 */
-    border-radius: 10px; /* 给图片添加圆角 */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
 }
 
 /* 弹窗背景 */
