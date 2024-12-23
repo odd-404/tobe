@@ -46,8 +46,9 @@ function checkAnsweredStatus() {
 }
 
 // 用户确认选择
-function askConfirmation(answer) {
-    checkAnsweredStatus().then((hasAnsweredToday) => {
+async function askConfirmation(answer) {
+   try {
+        const hasAnsweredToday = await checkAnsweredStatus();
         if (hasAnsweredToday) {
             alert("你今天已经做出选择啦！");
             return; // 防止重复选择
@@ -69,6 +70,9 @@ function askConfirmation(answer) {
             document.getElementById("modal").style.display = "block";
             document.getElementById("modal-title").innerText = "为什么呢?";
         }
+} catch (error) {
+        console.error("检查回答状态时出错:", error);
+    }
 }
 
 // 创建一个延迟的函数
@@ -78,21 +82,15 @@ function delay(ms) {
 
 // 提交原因
 async function submitReason() {
-    console.log("提交原因逻辑执行");
-    var todayDate = getTodayDate();
-  
-    // 关闭弹窗
-    closeModal();  // 调用关闭弹窗的函数
-    // 标记选择
-   // 记录到数据库
-   const today = todayDate.split(' ')[0]; // 获取今天的日期并格式化
-   set(ref(db, 'answered/' + today), true); // 记录今天的选择
-    }).catch((error) => {
-        console.error('检查回答状态时出错:', error);
-    });
+    try {
+        console.log("提交原因逻辑执行");
+        var todayDate = getTodayDate();  // 获取今天的日期
+        closeModal();  // 关闭弹窗
 
-    
-  
+        // 标记选择
+        const today = todayDate.split(' ')[0]; // 获取今天的日期并格式化
+        await set(ref(db, 'answered/' + today), true); // 记录今天的选择
+
   // 延迟 1 秒
     await delay(1000);
   
@@ -127,7 +125,10 @@ async function submitReason() {
     addMessage(message);
 
     // 保存用户选择到 Firebase
-    db.ref('answered/' + todayDate).set(userAnswer);
+        await set(ref(db, 'answered/' + todayDate), userAnswer);
+    } catch (error) {
+        console.error('提交原因时出错:', error);
+    }
 }
 
 // 关闭弹窗
