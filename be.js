@@ -31,6 +31,7 @@ function checkAnsweredStatus() {
 // 用户确认选择
 function askConfirmation(answer) {
     if (hasAnsweredToday) {
+        alert("你今天已经做出选择啦！");
         return; // 防止重复选择
     }
 
@@ -105,25 +106,35 @@ function addMessage(message) {
     messageItem.innerText = message;
     messageBoard.appendChild(messageItem);
 
-    // 生成当前日期
-    var todayDate = new Date().toISOString().split('T')[0];  // 获取YYYY-MM-DD格式
-
-    // 构建存储的文件内容
-    var messageData = {
-        date: todayDate,
-        message: message
-    };
-
-    // 将消息转换为 JSON 格式
-    var messageJSON = JSON.stringify(messageData);
-
-    // 上传文件到 OSS
-    client.put('messages/' + todayDate + '.json', new Blob([messageJSON], { type: 'text/plain' }))
+    // 获取现有消息并添加新消息
+    client.get('messages/messages.json')
         .then(function (result) {
-            console.log('Message uploaded to OSS:', result);
+            var messages = [];
+            try {
+                messages = JSON.parse(result.content);  // 获取现有消息并解析
+            } catch (e) {
+                console.error('Failed to parse existing messages:', e);
+            }
+
+            // 生成当前日期并添加新的消息
+            var todayDate = new Date().toISOString().split('T')[0];
+            var newMessage = {
+                date: todayDate,
+                message: message
+            };
+            messages.push(newMessage);
+
+            // 将消息数组更新为 JSON 格式
+            var updatedMessageJSON = JSON.stringify(messages);
+
+            // 上传更新后的消息到 OSS
+            return client.put('messages/messages.json', new Blob([updatedMessageJSON], { type: 'application/json' }));
+        })
+        .then(function (result) {
+            console.log('Messages updated and uploaded to OSS:', result);
         })
         .catch(function (err) {
-            console.error('Failed to upload message to OSS:', err);
+            console.error('Failed to update messages:', err);
         });
 }
 
