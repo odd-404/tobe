@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
 import { getDatabase, ref, push, set, onValue } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
-
+import { db } from "./firebase-config.js";
 // 配置 Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyCeuW4TN7TpDpSNrno9FMfxh3RdrYLjm6o",
@@ -187,6 +187,13 @@ function loadMessagesFromFirebase() {
         console.error('从 Firebase 获取消息时出错:', error);
     });
 }
+
+// 绑定按钮点击事件
+window.onload = () => {
+    document.getElementById("wantButton").addEventListener("click", () => askConfirmation("想"));
+    document.getElementById("notWantButton").addEventListener("click", () => askConfirmation("不想"));
+    loadMessagesFromFirebase();
+};
 
 // 页面加载时自动获取消息并展示
 window.onload = function() {
