@@ -22,33 +22,32 @@ if (!firebase.apps.length) {
 const db = firebase.database();
 
 
-// 获取今天的日期，并格式化为 xxxx年xx月xx日 xx点xx分 格式
+// 获取今天的日期，格式化日期为 xxxx/xx/xx xx:xx
 function getTodayDate() {
-    var today = new Date();
-    var year = today.getFullYear();
-    var month = today.getMonth() + 1; // 月份从0开始，所以下标加1
-    var day = today.getDate();
-    var hours = today.getHours();
-    var minutes = today.getMinutes();
+    var formattedDate = new Date(message.date);
+     var year = formattedDate.getFullYear();
+     var month = formattedDate.getMonth() + 1;
+      var day = formattedDate.getDate();
+     var hours = formattedDate.getHours();
+     var minutes = formattedDate.getMinutes();
 
-    // 格式化为两位数（不足补0）
+    // 补零格式化
     month = month < 10 ? '0' + month : month;
     day = day < 10 ? '0' + day : day;
-    hours = hours < 10 ? '0' + hours : hours;
+     hours = hours < 10 ? '0' + hours : hours;
     minutes = minutes < 10 ? '0' + minutes : minutes;
 
-    return year + '年' + month + '月' + day + '日 ' + hours + '点' + minutes + '分';
+    return  year + '/' + month + '/' + day + ' ' + hours + ':' + minutes;
 }
 
 // 检查是否已经选择过
 function checkAnsweredStatus() {
-    var todayDate = getTodayDate();
+    var today = getTodayDate().split(' ')[0]; // 提取年月日部分
     // 从 Firebase 获取今天是否已经选择
-    db.ref('answered/' + todayDate).once('value', function(snapshot) {
+    db.ref('answered/' + today).once('value', function(snapshot) {
         const answer = snapshot.val();
         if (answer) {
             hasAnsweredToday = true;
-            alert("你今天已经做出选择啦！");
         }
     }, function(error) {
         console.error('Error checking answered status:', error);
@@ -170,7 +169,7 @@ function loadMessagesFromFirebase() {
                 var messageItem = document.createElement("div");
                 messageItem.classList.add("message-item");
               
-                // 格式化日期为 xxxx年xx月xx日 xx点xx分
+                 // 格式化日期为 xxxx/xx/xx xx:xx
                 var formattedDate = new Date(message.date);
                 var year = formattedDate.getFullYear();
                 var month = formattedDate.getMonth() + 1;
@@ -184,7 +183,7 @@ function loadMessagesFromFirebase() {
                 hours = hours < 10 ? '0' + hours : hours;
                 minutes = minutes < 10 ? '0' + minutes : minutes;
 
-                var formattedDateStr = year + '年' + month + '月' + day + '日 ' + hours + '点' + minutes + '分';
+                var formattedDateStr = year + '/' + month + '/' + day + ' ' + hours + ':' + minutes;
 
                 // 设置消息内容
                 messageItem.innerText = formattedDateStr + " " + message.message;
