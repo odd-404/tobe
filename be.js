@@ -1,5 +1,5 @@
-var userAnswer = ""; // 记录用户的选择
-var hasAnsweredToday = false; // 标记用户是否已经选择过
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
 
 // 配置 Firebase
 const firebaseConfig = {
@@ -12,14 +12,12 @@ const firebaseConfig = {
   measurementId: "G-XJKZLKD1KJ"
 };
 
-// 初始化 Firebase
-if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-} else {
-    firebase.app(); // 如果已经初始化，使用已初始化的实例
-}
+// 初始化 Firebase 应用
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
-const db = firebase.database();
+var userAnswer = ""; // 记录用户的选择
+var hasAnsweredToday = false; // 标记用户是否已经选择过
 
 
 // 获取今天的日期，格式化日期为 xxxx/xx/xx xx:xx
@@ -152,16 +150,24 @@ function addMessage(message) {
         message: message,
     };
 
-    // 将新消息添加到 Firebase Realtime Database
-   db.ref('messages')
-        .push(newMessage)
+   // 获取 Firebase 数据库实例
+    const db = getDatabase();
+    const messagesRef = ref(db, 'messages');
+
+    // 使用 push 将新消息添加到 Firebase
+    const newMessageRef = push(messagesRef);
+    set(newMessageRef, newMessage)
         .then(() => console.log('Message added to Firebase'))
         .catch((err) => console.error('Failed to add message:', err));
 }
 
 // 从 Firebase 获取消息数据并展示
 function loadMessagesFromFirebase() {
-    db.ref('messages').on('value', function(snapshot) {
+    const db = getDatabase();
+    const messagesRef = ref(db, 'messages');
+
+    // 使用 onValue 监听数据库的变化
+    onValue(messagesRef, function(snapshot) {
         const messages = snapshot.val();
         const messageBoard = document.getElementById("message-board");
         messageBoard.innerHTML = "";  // 清空当前显示的消息
@@ -171,7 +177,7 @@ function loadMessagesFromFirebase() {
                 const message = messages[key];
                 const messageItem = document.createElement("div");
                 messageItem.classList.add("message-item");
-                
+
                 // 直接展示 message 内容
                 messageItem.innerText = message.message;
 
