@@ -25,7 +25,7 @@ function checkAnsweredStatus() {
     if (storedAnswer) {
         hasAnsweredToday = true;
         disableButtons();  // 禁用按钮
-        alert("你今天已经做出选择了！");
+        alert("你今天已经做出选择啦！");
     }
 }
 
@@ -91,11 +91,9 @@ function submitReason() {
     // 关闭弹窗
     document.getElementById("modal").style.display = "none";
     hasAnsweredToday = true; // 标记已经选择过
-}
 
-// 关闭弹窗
-function closeModal() {
-    document.getElementById("modal").style.display = "none";
+    // 禁用按钮
+    disableButtons();
 }
 
 // 禁用按钮
