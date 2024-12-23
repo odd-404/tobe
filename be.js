@@ -96,6 +96,11 @@ function submitReason() {
     disableButtons();
 }
 
+// 关闭弹窗
+function closeModal() {
+    document.getElementById("modal").style.display = "none";
+}
+
 // 禁用按钮
 function disableButtons() {
     document.getElementById("wantButton").disabled = true;
