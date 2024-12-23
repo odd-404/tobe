@@ -166,29 +166,13 @@ function loadMessagesFromFirebase() {
         for (let key in messages) {
             if (messages.hasOwnProperty(key)) {
                 const message = messages[key];
-                var messageItem = document.createElement("div");
+                const messageItem = document.createElement("div");
                 messageItem.classList.add("message-item");
-              
-                 // 格式化日期为 xxxx/xx/xx xx:xx
-                var formattedDate = new Date(message.date);
-                var year = formattedDate.getFullYear();
-                var month = formattedDate.getMonth() + 1;
-                var day = formattedDate.getDate();
-                var hours = formattedDate.getHours();
-                var minutes = formattedDate.getMinutes();
+                
+                // 直接展示 message 内容
+                messageItem.innerText = message.message;
 
-                // 补零格式化
-                month = month < 10 ? '0' + month : month;
-                day = day < 10 ? '0' + day : day;
-                hours = hours < 10 ? '0' + hours : hours;
-                minutes = minutes < 10 ? '0' + minutes : minutes;
-
-                var formattedDateStr = year + '/' + month + '/' + day + ' ' + hours + ':' + minutes;
-
-                // 设置消息内容
-                messageItem.innerText = formattedDateStr + " " + message.message;
-
-                // 将消息添加到消息板
+                // 添加到消息板
                 messageBoard.appendChild(messageItem);
             }
         }
