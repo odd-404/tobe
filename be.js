@@ -1,4 +1,4 @@
-var userAnswer = ""; // 记录用户的选择
+let userAnswer = ""; // 记录用户的选择
 var hasAnsweredToday = false; // 标记用户是否已经选择过
 
 // 初始化 OSS 客户端
