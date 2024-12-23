@@ -1,4 +1,3 @@
-
 var userAnswer = ""; // 记录用户的选择
 var hasAnsweredToday = false; // 标记用户是否已经选择过
 
@@ -19,10 +18,20 @@ function getTodayDate() {
     return year + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
 }
 
+// 检查是否已经选择过
+function checkAnsweredStatus() {
+    var todayDate = getTodayDate();
+    var storedAnswer = localStorage.getItem(todayDate); // 从本地存储获取今天的选择状态
+    if (storedAnswer) {
+        hasAnsweredToday = true;
+        disableButtons();  // 禁用按钮
+        alert("你今天已经做出选择了！");
+    }
+}
+
 // 用户确认选择
 function askConfirmation(answer) {
     if (hasAnsweredToday) {
-        alert("你今天已经做出选择了！");
         return; // 防止重复选择
     }
 
@@ -75,6 +84,10 @@ function submitReason() {
         }, 2000);  // 延迟显示第二条消息
         document.getElementById("response").style.display = "block";
     }
+
+    // 保存用户选择到本地存储
+    localStorage.setItem(todayDate, userAnswer);
+
     // 关闭弹窗
     document.getElementById("modal").style.display = "none";
     hasAnsweredToday = true; // 标记已经选择过
@@ -138,4 +151,9 @@ function loadMessagesFromOSS() {
         .catch(function (err) {
             console.error('Failed to load messages from OSS:', err);
         });
+}
+
+// 页面加载时检查是否已选择
+window.onload = function() {
+    checkAnsweredStatus();
 }
