@@ -97,10 +97,6 @@ async function submitReason() {
         }, 2000);  // 延迟显示第二条消息
     }
 
-    // 保存用户选择到 Firebase
-    var todayDate = getTodayDate();
-    db.ref('answered/' + todayDate).set(userAnswer);
-
     // 延迟 2 秒
     await delay(2000);
   
@@ -113,6 +109,10 @@ async function submitReason() {
         message = (userAnswer === "想" ? todayDate + " 张嘉旺因" + reason + "而幸存!" : todayDate + " 张嘉旺因" + reason + "而死.");
     }
     addMessage(message);
+
+    // 保存用户选择到 Firebase
+    var todayDate = getTodayDate();
+    db.ref('answered/' + todayDate).set(userAnswer);
 }
 
 // 关闭弹窗
