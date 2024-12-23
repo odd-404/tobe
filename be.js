@@ -69,13 +69,6 @@ function askConfirmation(answer) {
             document.getElementById("modal").style.display = "block";
             document.getElementById("modal-title").innerText = "为什么呢?";
         }
-
-        // 如果用户做出选择，记录到数据库
-        const today = todayDate.split(' ')[0]; // 获取今天的日期并格式化
-        set(ref(db, 'answered/' + today), true); // 记录今天的选择
-    }).catch((error) => {
-        console.error('检查回答状态时出错:', error);
-    });
 }
 
 // 创建一个延迟的函数
@@ -86,11 +79,19 @@ function delay(ms) {
 // 提交原因
 async function submitReason() {
     console.log("提交原因逻辑执行");
+    var todayDate = getTodayDate();
+  
     // 关闭弹窗
     closeModal();  // 调用关闭弹窗的函数
-    hasAnsweredToday = true; // 标记已经选择过
+    // 标记选择
+   // 记录到数据库
+   const today = todayDate.split(' ')[0]; // 获取今天的日期并格式化
+   set(ref(db, 'answered/' + today), true); // 记录今天的选择
+    }).catch((error) => {
+        console.error('检查回答状态时出错:', error);
+    });
 
-    var todayDate = getTodayDate();
+    
   
   // 延迟 1 秒
     await delay(1000);
