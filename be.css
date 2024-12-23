@@ -71,6 +71,15 @@ h2 {
     font-weight: bold;
 }
 
+#message-board {
+    text-align: left;         /* 左对齐文本 */
+    color: #d3d3d3;           /* 浅灰色字体 */
+    letter-spacing: 1px;      /* 字符间隔稍大一点 */
+    margin: 0 auto;           /* 居中容器 */
+    padding: 10px;            /* 可选，给容器添加一些内边距 */
+    width: 80%;               /* 控制容器宽度，可根据需要调整 */
+}
+
 /* 弹窗背景 */
 .modal {
     display: none;
