@@ -77,6 +77,10 @@ async function submitReason() {
     closeModal();  // 调用关闭弹窗的函数
     hasAnsweredToday = true; // 标记已经选择过
 
+  
+    var todayDate = getTodayDate();
+  
+
   // 延迟 1 秒
     await delay(1000);
     // 显示图片和消息
@@ -97,8 +101,8 @@ async function submitReason() {
         }, 2000);  // 延迟显示第二条消息
     }
 
-    // 延迟 2 秒
-    await delay(2000);
+    // 延迟 1 秒
+    await delay(1000);
   
     //添加到生死簿
     var reason = document.getElementById("reason-input").value.trim();
@@ -111,7 +115,6 @@ async function submitReason() {
     addMessage(message);
 
     // 保存用户选择到 Firebase
-    var todayDate = getTodayDate();
     db.ref('answered/' + todayDate).set(userAnswer);
 }
 
