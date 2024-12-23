@@ -1,4 +1,4 @@
-let userAnswer = ""; // 记录用户的选择
+var userAnswer = ""; // 记录用户的选择
 var hasAnsweredToday = false; // 标记用户是否已经选择过
 
 // 初始化 OSS 客户端
@@ -21,7 +21,7 @@ function getTodayDate() {
 // 检查是否已经选择过
 function checkAnsweredStatus() {
     var todayDate = getTodayDate();
-    var storedAnswer = localStorage.getItem(todayDate); // 从本地存储获取今天的选择状态
+    var storedAnswer = localStorage.getItem('answered_' + todayDate); // 从本地存储获取今天的选择状态
     if (storedAnswer) {
         hasAnsweredToday = true;
         disableButtons();  // 禁用按钮
@@ -59,12 +59,13 @@ function submitReason() {
     var todayDate = getTodayDate(); // 获取今天的日期
 
     // 如果没有输入，使用默认的消息
-    if (reason === "") {
-        var message = (userAnswer === "想" ? todayDate + " 张嘉旺还活着" : todayDate + "张嘉旺莫名其妙地死了");
-    } else {
+    var message = (userAnswer === "想" ? todayDate + " 张嘉旺还活着" : todayDate + " 张嘉旺莫名其妙地死了");
+
+    if (reason !== "") {
         // 在生死簿中添加消息
-        var message = (userAnswer === "想" ? todayDate + " 张嘉旺因" + reason + "而幸存!" : todayDate + " 张嘉旺因" + reason + "而死.");
+        message = (userAnswer === "想" ? todayDate + " 张嘉旺因" + reason + "而幸存!" : todayDate + " 张嘉旺因" + reason + "而死.");
     }
+
     addMessage(message);
 
     // 显示图片和消息
@@ -82,11 +83,10 @@ function submitReason() {
             // 显示第二个消息并插入图片
             document.getElementById("response").innerHTML = "今天的你已经死了，等待零点复活......<br><img src='https://web-framework-odd-01.oss-cn-hangzhou.aliyuncs.com/%E6%AD%BB%E4%BA%A1.png' alt='死亡图片' class='response-image'>";
         }, 2000);  // 延迟显示第二条消息
-        document.getElementById("response").style.display = "block";
     }
 
     // 保存用户选择到本地存储
-    localStorage.setItem(todayDate, userAnswer);
+    localStorage.setItem('answered_' + todayDate, userAnswer);
 
     // 关闭弹窗
     document.getElementById("modal").style.display = "none";
@@ -100,6 +100,12 @@ function submitReason() {
 function disableButtons() {
     document.getElementById("wantButton").disabled = true;
     document.getElementById("notWantButton").disabled = true;
+}
+
+// 启用按钮
+function enableButtons() {
+    document.getElementById("wantButton").disabled = false;
+    document.getElementById("notWantButton").disabled = false;
 }
 
 // 在生死簿上添加消息并上传到 OSS
@@ -155,3 +161,4 @@ function loadMessagesFromOSS() {
 window.onload = function() {
     checkAnsweredStatus();
 }
+
