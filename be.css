@@ -180,10 +180,4 @@ h2 {
     .response-image {
         width: 200px; /* 调整响应图片的最大宽度 */
     }
-
-    /* 按钮容器 */
-    .button-container {
-        flex-direction: column; /* 将按钮垂直排列 */
-        gap: 10px; /* 按钮之间的间距减小 */
-    }
 }
