@@ -71,7 +71,7 @@ function askConfirmation(answer) {
         }
 
         // 如果用户做出选择，记录到数据库
-        const today = getTodayDate().split(' ')[0];
+        const today = todayDate.split(' ')[0]; // 获取今天的日期并格式化
         set(ref(db, 'answered/' + today), true); // 记录今天的选择
     }).catch((error) => {
         console.error('检查回答状态时出错:', error);
