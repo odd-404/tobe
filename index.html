@@ -17,13 +17,11 @@
             <h1>张嘉旺今天想活了吗?</h1>
             <img src="https://web-framework-odd-01.oss-cn-hangzhou.aliyuncs.com/%E6%80%9D%E8%80%83.png
             " alt="思考图片" class="header-image">
-            <!-- 按钮样式，按钮之间有较大的间距 -->
+            
              <p></p>
            <!-- 按钮样式，按钮之间有较大的间距 -->
-            <div class="input-area">
-                <button class="btn" onclick="askConfirmation('想')">想</button>
-                <button class="btn" onclick="askConfirmation('不想')">不想</button>
-            </div>
+            <button class="btn" id="wantButton" onclick="askConfirmation('想')">想</button>
+            <button class="btn" id="notWantButton" onclick="askConfirmation('不想')">不想</button>
 
             <!-- 弹窗 -->
             <div id="modal" class="modal">
