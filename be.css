@@ -72,7 +72,6 @@ h2 {
 }
 
 #message-board {
-    text-align: left;         /* 左对齐文本 */
     color: #666666;           /* 浅灰色字体 */
     letter-spacing: 1px;      /* 字符间隔稍大一点 */
     margin: 0 auto;           /* 居中容器 */
@@ -199,7 +198,6 @@ h2 {
     }
 
     #message-board {
-        text-align: left;         /* 左对齐文本 */
         color: #666666;           /* 浅灰色字体 */
         letter-spacing: 1px;      /* 字符间隔稍大一点 */
         margin: 0 auto;           /* 居中容器 */
