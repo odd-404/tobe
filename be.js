@@ -48,7 +48,6 @@ function checkAnsweredStatus() {
 
 // 用户确认选择
 function askConfirmation(answer) {
-    console.log("用户选择:", answer);
     if (hasAnsweredToday) {
         alert("你今天已经做出选择啦！");
         return; // 防止重复选择
@@ -143,7 +142,6 @@ function addMessage(message) {
     };
 
    // 获取 Firebase 数据库实例
-    const db = getDatabase();
     const messagesRef = ref(db, 'messages');
 
     // 使用 push 将新消息添加到 Firebase
@@ -200,5 +198,8 @@ window.onload = () => {
     loadMessagesFromFirebase(); // 加载消息
 };
 
-window.askConfirmation = askConfirmation; // 将函数绑定到全局作用域
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("wantButton").addEventListener("click", () => askConfirmation("想"));
+    document.getElementById("notWantButton").addEventListener("click", () => askConfirmation("不想"));
+});
 
