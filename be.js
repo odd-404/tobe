@@ -16,19 +16,18 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-// 获取今天的日期
+// 获取今天的日期，并格式化为 xxxx年xx月xx日 格式
 function getTodayDate() {
     var today = new Date();
     var year = today.getFullYear();
     var month = today.getMonth() + 1; // 月份从0开始，所以下标加1
     var day = today.getDate();
-    return year + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
+    return year + '年' + (month < 10 ? '0' + month : month) + '月' + (day < 10 ? '0' + day : day) + '日';
 }
 
 // 检查是否已经选择过
 function checkAnsweredStatus() {
     var todayDate = getTodayDate();
-
     // 从 Firebase 获取今天是否已经选择
     db.ref('answered/' + todayDate).once('value', function(snapshot) {
         const answer = snapshot.val();
@@ -77,14 +76,12 @@ async function submitReason() {
     closeModal();  // 调用关闭弹窗的函数
     hasAnsweredToday = true; // 标记已经选择过
 
-  
     var todayDate = getTodayDate();
   
-
   // 延迟 1 秒
     await delay(1000);
-    // 显示图片和消息
   
+    // 显示图片和消息
     if (userAnswer === '想') {
         // 显示“好狗狗好狗狗”并插入图片
         document.getElementById("response").innerHTML = "好狗狗好狗狗<br><img src='https://web-framework-odd-01.oss-cn-hangzhou.aliyuncs.com/%E8%B5%9E.png' alt='狗狗图片' class='response-image'>";
@@ -160,7 +157,12 @@ function loadMessagesFromFirebase() {
                 const message = messages[key];
                 var messageItem = document.createElement("div");
                 messageItem.classList.add("message-item");
-                messageItem.innerText = message.message;
+              
+                // 格式化日期为 xxxx年xx月xx日
+                var formattedDate = new Date(message.date);
+                var formattedDateStr = formattedDate.getFullYear() + '年' + (formattedDate.getMonth() + 1) + '月' + formattedDate.getDate() + '日';
+                messageItem.innerText = formattedDateStr + " " + message.message;
+
                 messageBoard.appendChild(messageItem);
             }
         }
