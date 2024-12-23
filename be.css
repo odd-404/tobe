@@ -20,6 +20,14 @@ h1 {
     margin-bottom: 15px; /* 调整底部间距 */
     text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1); /* 适当的文字阴影 */
 }
+/* 按钮容器 */
+.button-container {
+    display: flex; /* 启用 flex 布局 */
+    justify-content: center; /* 按钮居中对齐 */
+    gap: 15px; /* 设置按钮之间的间距 */
+    flex-wrap: nowrap; /* 防止按钮换行 */
+    align-items: center; /* 垂直居中对齐 */
+}
 
 /* 按钮样式 */
 .btn {
