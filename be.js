@@ -13,16 +13,19 @@ const firebaseConfig = {
 };
 
 // 初始化 Firebase
-firebase.initializeApp(firebaseConfig);
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+} else {
+    firebase.app(); // 如果已经初始化，使用已初始化的实例
+}
+
 const db = firebase.database();
+
 
 // 获取今天的日期，并格式化为 xxxx年xx月xx日 格式
 function getTodayDate() {
-    var today = new Date();
-    var year = today.getFullYear();
-    var month = today.getMonth() + 1; // 月份从0开始，所以下标加1
-    var day = today.getDate();
-    return year + '年' + (month < 10 ? '0' + month : month) + '月' + (day < 10 ? '0' + day : day) + '日';
+    const today = new Date();
+    return today.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' });
 }
 
 // 检查是否已经选择过
@@ -122,27 +125,24 @@ function closeModal() {
 
 // 在生死簿上添加消息并上传到 Firebase
 function addMessage(message) {
-    var messageBoard = document.getElementById("message-board");
-    var messageItem = document.createElement("div");
+    const messageBoard = document.getElementById("message-board");
+    const messageItem = document.createElement("div");
     messageItem.classList.add("message-item");
     messageItem.innerText = message;
     messageBoard.appendChild(messageItem);
 
-    // 获取当前日期
-    var todayDate = new Date().toISOString().split('T')[0];
-    var newMessage = {
+    const todayDate = getTodayDate(); // 调用 getTodayDate
+
+    const newMessage = {
         date: todayDate,
-        message: message
+        message: message,
     };
 
     // 将新消息添加到 Firebase Realtime Database
-    db.ref('messages').push(newMessage)
-        .then(function () {
-            console.log('Message added to Firebase');
-        })
-        .catch(function (err) {
-            console.error('Failed to add message:', err);
-        });
+   db.ref('messages')
+        .push(newMessage)
+        .then(() => console.log('Message added to Firebase'))
+        .catch((err) => console.error('Failed to add message:', err));
 }
 
 // 从 Firebase 获取消息数据并展示
