@@ -147,3 +147,43 @@ h2 {
         transform: scale(1);
     }
 }
+
+/* 针对小屏幕（手机、平板等）进行优化 */
+@media (max-width: 768px) {
+    /* 页面容器 */
+    .container {
+        width: 90%; /* 在小屏幕上稍微放宽容器宽度 */
+        padding: 15px; /* 减小内边距 */
+    }
+
+    /* 标题 */
+    h1 {
+        font-size: 26px; /* 减小字体大小 */
+        margin-bottom: 10px; /* 减小底部间距 */
+    }
+
+    /* 按钮样式 */
+    .btn {
+        padding: 10px 20px; /* 增大按钮的点击区域 */
+        font-size: 15px; /* 减小字体 */
+        margin: 10px 20px; /* 调整按钮间距 */
+    }
+
+    /* 图片样式 */
+    .header-image {
+        width: 140px; /* 调整图片宽度 */
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    /* 响应图片 */
+    .response-image {
+        width: 200px; /* 调整响应图片的最大宽度 */
+    }
+
+    /* 按钮容器 */
+    .button-container {
+        flex-direction: column; /* 将按钮垂直排列 */
+        gap: 10px; /* 按钮之间的间距减小 */
+    }
+}
