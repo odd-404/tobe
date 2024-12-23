@@ -53,7 +53,6 @@ function askConfirmation(answer) {
   }
 
     userAnswer = answer; // 记录用户的选择
-
     var todayDate = getTodayDate(); // 获取今天的日期
     // 如果是“不想”，弹出确认框
     if (userAnswer === '不想') {
@@ -68,6 +67,13 @@ function askConfirmation(answer) {
         document.getElementById("modal").style.display = "block";
         document.getElementById("modal-title").innerText = "为什么呢?";
     }
+
+     // 如果用户做出选择，记录到数据库
+        const today = getTodayDate().split(' ')[0];
+        set(ref(db, 'answered/' + today), true); // 记录今天的选择
+    }).catch((error) => {
+        console.error('检查回答状态时出错:', error);
+    });
 }
 
 // 创建一个延迟的函数
