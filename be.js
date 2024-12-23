@@ -89,7 +89,7 @@ function submitReason() {
     localStorage.setItem('answered_' + todayDate, userAnswer);
 
     // 关闭弹窗
-    document.getElementById("modal").style.display = "none";
+    closeModal();  // 调用关闭弹窗的函数
     hasAnsweredToday = true; // 标记已经选择过
 
     // 禁用按钮
