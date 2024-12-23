@@ -1,5 +1,6 @@
-import { ref, push, set, onValue } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
 import { db } from "./firebase-config.js";
+import { ref, push, set, onValue } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
+
 // 配置 Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyCeuW4TN7TpDpSNrno9FMfxh3RdrYLjm6o",
@@ -11,9 +12,6 @@ const firebaseConfig = {
   measurementId: "G-XJKZLKD1KJ"
 };
 
-// 初始化 Firebase 应用
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
 
 var userAnswer = ""; // 记录用户的选择
 var hasAnsweredToday = false; // 标记用户是否已经选择过
@@ -50,6 +48,7 @@ function checkAnsweredStatus() {
 
 // 用户确认选择
 function askConfirmation(answer) {
+    console.log("用户选择:", answer);
     if (hasAnsweredToday) {
         alert("你今天已经做出选择啦！");
         return; // 防止重复选择
