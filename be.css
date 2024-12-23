@@ -16,7 +16,7 @@
 h1 {
     color: rgb(47, 47, 67);
     font-family: 'Arial', sans-serif;
-    font-size: 24px; /* 减小字体大小，避免标题占用过多空间 */
+    font-size: 28px; /* 减小字体大小，避免标题占用过多空间 */
     margin-bottom: 15px; /* 调整底部间距 */
     text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1); /* 适当的文字阴影 */
 }
@@ -45,7 +45,7 @@ h1 {
 
 /* 图片样式 */
 .header-image {
-    width: 120px; /* 控制图片宽度，避免图片过大 */
+    width: 160px; /* 控制图片宽度，避免图片过大 */
     height: auto;
     margin-top: 15px;
     margin-bottom: 15px;
