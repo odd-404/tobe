@@ -22,7 +22,6 @@ var hasAnsweredToday = false; // 标记用户是否已经选择过
 
 // 获取今天的日期，格式化日期为 xxxx/xx/xx xx:xx
 function getTodayDate() {
-    var formattedDate = new Date(message.date);
      var year = formattedDate.getFullYear();
      var month = formattedDate.getMonth() + 1;
       var day = formattedDate.getDate();
@@ -60,7 +59,7 @@ function askConfirmation(answer) {
     if (hasAnsweredToday) {
         alert("你今天已经做出选择啦！");
         return; // 防止重复选择
-    }
+  }
 
     userAnswer = answer; // 记录用户的选择
 
