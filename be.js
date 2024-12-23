@@ -22,10 +22,22 @@ if (!firebase.apps.length) {
 const db = firebase.database();
 
 
-// 获取今天的日期，并格式化为 xxxx年xx月xx日 格式
+// 获取今天的日期，并格式化为 xxxx年xx月xx日 xx点xx分 格式
 function getTodayDate() {
-    const today = new Date();
-    return today.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' });
+    var today = new Date();
+    var year = today.getFullYear();
+    var month = today.getMonth() + 1; // 月份从0开始，所以下标加1
+    var day = today.getDate();
+    var hours = today.getHours();
+    var minutes = today.getMinutes();
+
+    // 格式化为两位数（不足补0）
+    month = month < 10 ? '0' + month : month;
+    day = day < 10 ? '0' + day : day;
+    hours = hours < 10 ? '0' + hours : hours;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+
+    return year + '年' + month + '月' + day + '日 ' + hours + '点' + minutes + '分';
 }
 
 // 检查是否已经选择过
@@ -106,11 +118,11 @@ async function submitReason() {
   
     //添加到生死簿
     var reason = document.getElementById("reason-input").value.trim();
-    var message = (userAnswer === "想" ? todayDate + " 张嘉旺还活着" : todayDate + " 张嘉旺莫名其妙地死了");
+    var message = (userAnswer === "想" ? todayDate + "  张嘉旺还活着" : todayDate + " 张嘉旺莫名其妙地死了");
 
     if (reason !== "") {
         // 在生死簿中添加消息
-        message = (userAnswer === "想" ? todayDate + " 张嘉旺因" + reason + "而幸存!" : todayDate + " 张嘉旺因" + reason + "而死.");
+        message = (userAnswer === "想" ? todayDate + "  张嘉旺因" + reason + "而幸存!" : todayDate + " 张嘉旺因" + reason + "而死.");
     }
     addMessage(message);
 
@@ -158,11 +170,26 @@ function loadMessagesFromFirebase() {
                 var messageItem = document.createElement("div");
                 messageItem.classList.add("message-item");
               
-                // 格式化日期为 xxxx年xx月xx日
+                // 格式化日期为 xxxx年xx月xx日 xx点xx分
                 var formattedDate = new Date(message.date);
-                var formattedDateStr = formattedDate.getFullYear() + '年' + (formattedDate.getMonth() + 1) + '月' + formattedDate.getDate() + '日';
+                var year = formattedDate.getFullYear();
+                var month = formattedDate.getMonth() + 1;
+                var day = formattedDate.getDate();
+                var hours = formattedDate.getHours();
+                var minutes = formattedDate.getMinutes();
+
+                // 补零格式化
+                month = month < 10 ? '0' + month : month;
+                day = day < 10 ? '0' + day : day;
+                hours = hours < 10 ? '0' + hours : hours;
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+
+                var formattedDateStr = year + '年' + month + '月' + day + '日 ' + hours + '点' + minutes + '分';
+
+                // 设置消息内容
                 messageItem.innerText = formattedDateStr + " " + message.message;
 
+                // 将消息添加到消息板
                 messageBoard.appendChild(messageItem);
             }
         }
