@@ -1,5 +1,4 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
-import { getDatabase, ref, push, set, onValue } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
+import { ref, push, set, onValue } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
 import { db } from "./firebase-config.js";
 // 配置 Firebase
 const firebaseConfig = {
@@ -22,21 +21,16 @@ var hasAnsweredToday = false; // 标记用户是否已经选择过
 
 // 获取今天的日期，格式化日期为 xxxx/xx/xx xx:xx
 function getTodayDate() {
-     const formattedDate = new Date(); // 创建日期对象
-     var year = formattedDate.getFullYear();
-     var month = formattedDate.getMonth() + 1;
-      var day = formattedDate.getDate();
-     var hours = formattedDate.getHours();
-     var minutes = formattedDate.getMinutes();
+    const formattedDate = new Date();
+    const year = formattedDate.getFullYear();
+    const month = (formattedDate.getMonth() + 1).toString().padStart(2, "0");
+    const day = formattedDate.getDate().toString().padStart(2, "0");
+    const hours = formattedDate.getHours().toString().padStart(2, "0");
+    const minutes = formattedDate.getMinutes().toString().padStart(2, "0");
 
-    // 补零格式化
-    month = month < 10 ? '0' + month : month;
-    day = day < 10 ? '0' + day : day;
-     hours = hours < 10 ? '0' + hours : hours;
-    minutes = minutes < 10 ? '0' + minutes : minutes;
-
-    return  year + '/' + month + '/' + day + ' ' + hours + ':' + minutes;
+    return `${year}/${month}/${day} ${hours}:${minutes}`;
 }
+
 
 // 检查今天是否已经回答
 function checkAnsweredStatus() {
@@ -196,13 +190,16 @@ window.onload = () => {
 };
 
 // 页面加载时自动获取消息并展示
-window.onload = function() {
-    checkAnsweredStatus().then(hasAnswered => {
+window.onload = () => {
+    checkAnsweredStatus().then((hasAnswered) => {
         if (hasAnswered) {
             console.log("今天已经回答过了！");
         } else {
             console.log("今天还未回答！");
         }
     });
-    loadMessagesFromFirebase();  // 加载 Firebase 中的消息
-}
+    loadMessagesFromFirebase(); // 加载消息
+};
+
+window.askConfirmation = askConfirmation; // 将函数绑定到全局作用域
+
