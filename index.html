@@ -47,10 +47,27 @@
         </div>
     </main>
     <!-- 引入 Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js"></script>
-    <!-- 引入外部JavaScript文件 -->
-    <script src="be.js"></script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+  import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
+
+  // 配置 Firebase
+  const firebaseConfig = {
+    apiKey: "你的apiKey",
+    authDomain: "你的项目ID.firebaseapp.com",
+    databaseURL: "https://你的项目ID.firebaseio.com",
+    projectId: "你的项目ID",
+    storageBucket: "你的项目ID.appspot.com",
+    messagingSenderId: "你的Sender ID",
+    appId: "你的appId"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+</script>
+
+<!-- 引入外部JavaScript文件，保持为模块化 -->
+<script type="module" src="be.js"></script>
     
 </body>
 
