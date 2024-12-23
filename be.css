@@ -31,7 +31,7 @@ h1 {
 
 /* 按钮样式 */
 .btn {
-    padding: 15px 25px; /* 增大按钮的尺寸 */
+    padding: 10px 20px; /* 增大按钮的尺寸 */
     font-size: 24px; /* 增大字体大小 */
     margin: 15px 30px; /* 增加按钮之间的间距 */
     border-radius: 8px; /* 可以适当调整圆角 */
@@ -69,12 +69,12 @@ h1 {
     }
 
     h1 {
-        font-size: 20px; /* 在小屏幕下调整标题字体 */
+        font-size: 24px; /* 在小屏幕下调整标题字体 */
     }
 
     .btn {
-        padding: 8px 16px; /* 缩小按钮尺寸 */
-        font-size: 14px; /* 调整按钮字体 */
+        padding: 10px 20px; /* 缩小按钮尺寸 */
+        font-size: 18px; /* 调整按钮字体 */
     }
 
     .response-image {
