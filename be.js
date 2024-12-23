@@ -16,7 +16,6 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-
 // 获取今天的日期
 function getTodayDate() {
     var today = new Date();
@@ -29,11 +28,17 @@ function getTodayDate() {
 // 检查是否已经选择过
 function checkAnsweredStatus() {
     var todayDate = getTodayDate();
-    var storedAnswer = localStorage.getItem('answered_' + todayDate); // 从本地存储获取今天的选择状态
-    if (storedAnswer) {
-        hasAnsweredToday = true;
-        alert("你今天已经做出选择啦！");
-    }
+
+    // 从 Firebase 获取今天是否已经选择
+    db.ref('answered/' + todayDate).once('value', function(snapshot) {
+        const answer = snapshot.val();
+        if (answer) {
+            hasAnsweredToday = true;
+            alert("你今天已经做出选择啦！");
+        }
+    }, function(error) {
+        console.error('Error checking answered status:', error);
+    });
 }
 
 // 用户确认选择
@@ -66,7 +71,7 @@ function submitReason() {
     // 关闭弹窗
     closeModal();  // 调用关闭弹窗的函数
     hasAnsweredToday = true; // 标记已经选择过
- 
+
     // 显示图片和消息
     if (userAnswer === '想') {
         // 显示“好狗狗好狗狗”并插入图片
@@ -84,14 +89,12 @@ function submitReason() {
         }, 2000);  // 延迟显示第二条消息
     }
 
-    // 保存用户选择到本地存储
-    localStorage.setItem('answered_' + todayDate, userAnswer);
+    // 保存用户选择到 Firebase
+    var todayDate = getTodayDate();
+    db.ref('answered/' + todayDate).set(userAnswer);
 
     //添加到生死簿
     var reason = document.getElementById("reason-input").value.trim();
-    var todayDate = getTodayDate(); // 获取今天的日期
-
-    // 如果没有输入，使用默认的消息
     var message = (userAnswer === "想" ? todayDate + " 张嘉旺还活着" : todayDate + " 张嘉旺莫名其妙地死了");
 
     if (reason !== "") {
@@ -105,7 +108,6 @@ function submitReason() {
 function closeModal() {
     document.getElementById("modal").style.display = "none";
 }
-
 
 // 在生死簿上添加消息并上传到 Firebase
 function addMessage(message) {
@@ -153,8 +155,8 @@ function loadMessagesFromFirebase() {
     });
 }
 
-// 页面加载时检查是否已选择
+// 页面加载时自动获取消息并展示
 window.onload = function() {
-    checkAnsweredStatus();
+    checkAnsweredStatus();  // 检查是否已经回答过
+    loadMessagesFromFirebase();  // 加载 Firebase 中的消息
 }
-
