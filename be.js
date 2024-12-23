@@ -72,7 +72,7 @@ function delay(ms) {
 }
 
 // 提交原因
-function submitReason() {
+async function submitReason() {
     // 关闭弹窗
     closeModal();  // 调用关闭弹窗的函数
     hasAnsweredToday = true; // 标记已经选择过
@@ -80,6 +80,7 @@ function submitReason() {
   // 延迟 1 秒
     await delay(1000);
     // 显示图片和消息
+  
     if (userAnswer === '想') {
         // 显示“好狗狗好狗狗”并插入图片
         document.getElementById("response").innerHTML = "好狗狗好狗狗<br><img src='https://web-framework-odd-01.oss-cn-hangzhou.aliyuncs.com/%E8%B5%9E.png' alt='狗狗图片' class='response-image'>";
@@ -102,6 +103,7 @@ function submitReason() {
 
     // 延迟 2 秒
     await delay(2000);
+  
     //添加到生死簿
     var reason = document.getElementById("reason-input").value.trim();
     var message = (userAnswer === "想" ? todayDate + " 张嘉旺还活着" : todayDate + " 张嘉旺莫名其妙地死了");
