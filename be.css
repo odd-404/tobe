@@ -29,7 +29,7 @@ h2 {
 
 /* 按钮样式 */
 .btn {
-    padding: 10px 30px; /* 增加按钮的大小 */
+    padding: 8px 25px; /* 增加按钮的大小 */
     font-size: 18px; /* 增大字体 */
     margin: 15px 50px; /* 增加按钮之间的间距 */
     border-radius: 5px; /* 圆角 */
@@ -44,7 +44,7 @@ h2 {
 
 /* 图片样式 */
 .header-image {
-    width: 180px; /* 图片稍微增大 */
+    width: 150px; /* 图片稍微增大 */
     height: auto;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -53,7 +53,7 @@ h2 {
 
 /* 响应图片 */
 .response-image {
-    width: 250px;
+    width: 275px;
     height: auto;
     display: block;
     margin: 20px auto; /* 图片居中并增加上下间距 */
