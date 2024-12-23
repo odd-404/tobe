@@ -87,11 +87,12 @@ async function submitReason() {
         var todayDate = getTodayDate();  // 获取今天的日期
         closeModal();  // 关闭弹窗
 
-        // 标记选择
+        // 标记用户今天已经做了选择
+      
         const today = todayDate.split(' ')[0]; // 获取今天的日期并格式化
-        await set(ref(db, 'answered/' + today), true); // 记录今天的选择
+        set(ref(db, 'answered/' + today), true); // 记录今天的选择
 
-  // 延迟 1 秒
+   // 延迟 1 秒
     await delay(1000);
   
     // 显示图片和消息
@@ -123,9 +124,7 @@ async function submitReason() {
         message = (userAnswer === "想" ? todayDate + "  张嘉旺因" + reason + "而幸存!" : todayDate + " 张嘉旺因" + reason + "而死.");
     }
     addMessage(message);
-
-    // 保存用户选择到 Firebase
-        await set(ref(db, 'answered/' + todayDate), userAnswer);
+      
     } catch (error) {
         console.error('提交原因时出错:', error);
     }
