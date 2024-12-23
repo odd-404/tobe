@@ -24,7 +24,6 @@ function checkAnsweredStatus() {
     var storedAnswer = localStorage.getItem('answered_' + todayDate); // 从本地存储获取今天的选择状态
     if (storedAnswer) {
         hasAnsweredToday = true;
-        disableButtons();  // 禁用按钮
         alert("你今天已经做出选择啦！");
     }
 }
@@ -44,12 +43,12 @@ function askConfirmation(answer) {
         if (confirmAnswer) {
             // 隐藏按钮并显示弹窗
             document.getElementById("modal").style.display = "block";
-            document.getElementById("modal-title").innerText = "请输入你的遗言";
+            document.getElementById("modal-title").innerText = "为什么呢?";
         }
     } else if (userAnswer === '想') {
         // 隐藏按钮并显示弹窗
         document.getElementById("modal").style.display = "block";
-        document.getElementById("modal-title").innerText = "请输入你的感言";
+        document.getElementById("modal-title").innerText = "为什么呢?";
     }
 }
 
@@ -58,11 +57,7 @@ function submitReason() {
     // 关闭弹窗
     closeModal();  // 调用关闭弹窗的函数
     hasAnsweredToday = true; // 标记已经选择过
-
-    // 禁用按钮
-    disableButtons();
-
-    
+ 
     // 显示图片和消息
     if (userAnswer === '想') {
         // 显示“好狗狗好狗狗”并插入图片
@@ -94,25 +89,12 @@ function submitReason() {
         // 在生死簿中添加消息
         message = (userAnswer === "想" ? todayDate + " 张嘉旺因" + reason + "而幸存!" : todayDate + " 张嘉旺因" + reason + "而死.");
     }
-
     addMessage(message);
 }
 
 // 关闭弹窗
 function closeModal() {
     document.getElementById("modal").style.display = "none";
-}
-
-// 禁用按钮
-function disableButtons() {
-    document.getElementById("wantButton").disabled = true;
-    document.getElementById("notWantButton").disabled = true;
-}
-
-// 启用按钮
-function enableButtons() {
-    document.getElementById("wantButton").disabled = false;
-    document.getElementById("notWantButton").disabled = false;
 }
 
 // 在生死簿上添加消息并上传到 OSS
