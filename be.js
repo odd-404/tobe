@@ -150,6 +150,9 @@ function openModal(title, placeholder, buttonText, submitCallback) {
     modal.style.display = 'block'; // 显示弹窗
 }
 
+// 选择图片元素
+const headerImage = document.getElementById('headerImage'); // 确保图片有id或选择器
+
 // 点击图片触发弹窗
 headerImage.addEventListener('click', () => {
     openModal(
@@ -222,13 +225,6 @@ function loadMessagesFromFirebase() {
     });
 }
 
-// 绑定按钮点击事件
-window.onload = () => {
-    document.getElementById("wantButton").addEventListener("click", () => askConfirmation("想"));
-    document.getElementById("notWantButton").addEventListener("click", () => askConfirmation("不想"));
-    loadMessagesFromFirebase();
-};
-
 // 页面加载时自动获取消息并展示
 window.onload = () => {
     checkAnsweredStatus().then((hasAnswered) => {
@@ -246,5 +242,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("notWantButton").addEventListener("click", () => askConfirmation("不想"));
     document.getElementById("closeModalButton").addEventListener("click", closeModal);
     document.getElementById("submitReasonButton").addEventListener("click", submitReason);
+    loadMessagesFromFirebase();
 });
 
