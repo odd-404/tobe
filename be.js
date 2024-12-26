@@ -136,42 +136,9 @@ function closeModal() {
     document.getElementById("modal").style.display = "none";
 }
 
-// 打开弹窗的函数
-function openModal(title, placeholder, buttonText, submitCallback) {
-    modalTitle.textContent = title; // 设置弹窗标题
-    reasonInput.placeholder = placeholder; // 设置占位符
-    submitReasonButton.textContent = buttonText; // 设置按钮文本
 
-    // 清除按钮的旧事件监听器，添加新的提交逻辑
-    submitReasonButton.replaceWith(submitReasonButton.cloneNode(true));
-    const newSubmitButton = document.getElementById('submitReasonButton');
-    newSubmitButton.addEventListener('click', submitCallback);
 
-    modal.style.display = 'block'; // 显示弹窗
-}
 
-// 选择图片元素
-const headerImage = document.getElementById('headerImage'); // 确保图片有id或选择器
-
-// 点击图片触发弹窗
-headerImage.addEventListener('click', () => {
-    openModal(
-        '对熊说话', // 标题
-        '熊不会告诉任何人...', // 占位符
-        '提交', // 按钮文本
-        () => {
-            const message = reasonInput.value.trim();
-            if (message) {
-                addMessage(message);
-              
-                reasonInput.value = ''; // 清空输入框
-                closeModal(); // 关闭弹窗
-            } else {
-                alert('熊没听见');
-            }
-        }
-    );
-});
 // 在生死簿上添加消息并上传到 Firebase
 function addMessage(message) {
     const messageBoard = document.getElementById("message-board");
@@ -237,11 +204,33 @@ window.onload = () => {
     loadMessagesFromFirebase(); // 加载消息
 };
 
+// 显示弹窗2的函数
+function openModal2() {
+    modal2.style.display = 'block'; // 显示弹窗
+}
+// 关闭弹窗2的函数
+function closeModal2() {
+    modal2.style.display = 'none'; // 隐藏弹窗
+}
+// 提交内容的函数，调用 addMessage 处理提交的内容
+function submitWords() {
+    const message = wordsInput.value.trim(); // 获取输入的内容
+    if (message) {
+        addMessage(message); // 调用 addMessage 处理内容
+        wordsInput.value = ''; // 清空输入框
+        closeModal2(); // 关闭弹窗
+    } else {
+        alert('熊没听见'); // 如果输入为空，提示用户
+    }
+}
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("wantButton").addEventListener("click", () => askConfirmation("想"));
     document.getElementById("notWantButton").addEventListener("click", () => askConfirmation("不想"));
     document.getElementById("closeModalButton").addEventListener("click", closeModal);
+    document.getElementById("closeModalButton2").addEventListener("click", closeModal2);
     document.getElementById("submitReasonButton").addEventListener("click", submitReason);
+    document.getElementById("headerImage").addEventListener('click', openModal2);
+    document.getElementById("submitWordsButton").addEventListener('click', submitWords);
     loadMessagesFromFirebase();
 });
 
