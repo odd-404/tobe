@@ -94,6 +94,19 @@ async function submitReason() {
 
    // 延迟 1 秒
     await delay(1000);
+    // 随机选择图片
+        const imageLinks = [
+            'https://web-framework-odd-01.oss-cn-hangzhou.aliyuncs.com/%E6%9D%80.png',
+            'https://web-framework-odd-01.oss-cn-hangzhou.aliyuncs.com/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202024-12-26%20150247.png',
+            'https://web-framework-odd-01.oss-cn-hangzhou.aliyuncs.com/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202024-12-26%20150326.png',
+            'https://web-framework-odd-01.oss-cn-hangzhou.aliyuncs.com/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202024-12-26%20150334.png',
+            'https://web-framework-odd-01.oss-cn-hangzhou.aliyuncs.com/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202024-12-26%20150348.png',
+            'https://web-framework-odd-01.oss-cn-hangzhou.aliyuncs.com/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202024-12-26%20150355.png',
+            'https://web-framework-odd-01.oss-cn-hangzhou.aliyuncs.com/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202024-12-26%20150407.png',
+            'https://web-framework-odd-01.oss-cn-hangzhou.aliyuncs.com/%E6%96%A9%E7%AB%8B%E5%86%B3.png'
+        ];
+        const randomImage = imageLinks[Math.floor(Math.random() * imageLinks.length)];
+      
   
     // 显示图片和消息
     if (userAnswer === '想') {
@@ -102,7 +115,7 @@ async function submitReason() {
         document.getElementById("response").style.display = "block";
     } else if (userAnswer === '不想') {
         // 显示“接招吧！”并插入图片
-        document.getElementById("response").innerHTML = "接招吧！<br><img src='https://web-framework-odd-01.oss-cn-hangzhou.aliyuncs.com/%E6%9D%80.png' alt='接招图片' class='response-image'>";
+        document.getElementById("response").innerHTML = "接招吧！<br><img src='${randomImage}' alt='接招图片' class='response-image'>";
         document.getElementById("response").style.display = "block";
 
         // 等待用户点击后显示第二个消息
@@ -214,9 +227,9 @@ function closeModal2() {
 }
 // 提交内容的函数，调用 addMessage 处理提交的内容
 function submitWords() {
-    const message = wordsInput.value.trim(); // 获取输入的内容
+    var message = document.getElementById("reason-input").value.trim(); // 获取输入的内容
     if (message) {
-        addMessage(message); // 调用 addMessage 处理内容
+        addMessage("有人说: "+message); // 调用 addMessage 处理内容
         wordsInput.value = ''; // 清空输入框
         closeModal2(); // 关闭弹窗
     } else {
@@ -229,8 +242,10 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("closeModalButton").addEventListener("click", closeModal);
     document.getElementById("closeModalButton2").addEventListener("click", closeModal2);
     document.getElementById("submitReasonButton").addEventListener("click", submitReason);
-    document.getElementById("headerImage").addEventListener('click', openModal2);
     document.getElementById("submitWordsButton").addEventListener('click', submitWords);
+  
+    document.getElementById("headerImage").addEventListener('click', openModal2);
+
     loadMessagesFromFirebase();
 });
 
