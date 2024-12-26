@@ -227,9 +227,10 @@ function closeModal2() {
 }
 // 提交内容的函数，调用 addMessage 处理提交的内容
 function submitWords() {
-    var message = document.getElementById("reason-input").value.trim(); // 获取输入的内容
+    var wordsInput = document.getElementById("words-input");  // 获取输入框元素
+    var message = wordsInput.value.trim(); // 获取输入的内容
     if (message) {
-        addMessage("熊说: "+message); // 调用 addMessage 处理内容
+        addMessage('熊说: "'+message+'"'); // 调用 addMessage 处理内容
         wordsInput.value = ''; // 清空输入框
         closeModal2(); // 关闭弹窗
     } else {
