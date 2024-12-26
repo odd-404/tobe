@@ -115,7 +115,7 @@ async function submitReason() {
         document.getElementById("response").style.display = "block";
     } else if (userAnswer === '不想') {
         // 显示“接招吧！”并插入图片
-        document.getElementById("response").innerHTML = "接招吧！<br><img src='${randomImage}' alt='接招图片' class='response-image'>";
+        document.getElementById("response").innerHTML = `接招吧！<br><img src='${randomImage}' alt='接招图片' class='response-image'>`;
         document.getElementById("response").style.display = "block";
 
         // 等待用户点击后显示第二个消息
