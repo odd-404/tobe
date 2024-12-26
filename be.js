@@ -63,12 +63,12 @@ async function askConfirmation(answer) {
             if (confirmAnswer) {
                 // 隐藏按钮并显示弹窗
                 document.getElementById("modal").style.display = "block";
-                document.getElementById("modal-title").innerText = "为什么呢?";
+                document.getElementById("modal-title").innerText = "为什么呀?";
             }
         } else if (userAnswer === '想') {
             // 隐藏按钮并显示弹窗
             document.getElementById("modal").style.display = "block";
-            document.getElementById("modal-title").innerText = "为什么呢?";
+            document.getElementById("modal-title").innerText = "为什么呀?";
         }
 } catch (error) {
         console.error("检查回答状态时出错:", error);
@@ -136,6 +136,39 @@ function closeModal() {
     document.getElementById("modal").style.display = "none";
 }
 
+// 打开弹窗的函数
+function openModal(title, placeholder, buttonText, submitCallback) {
+    modalTitle.textContent = title; // 设置弹窗标题
+    reasonInput.placeholder = placeholder; // 设置占位符
+    submitReasonButton.textContent = buttonText; // 设置按钮文本
+
+    // 清除按钮的旧事件监听器，添加新的提交逻辑
+    submitReasonButton.replaceWith(submitReasonButton.cloneNode(true));
+    const newSubmitButton = document.getElementById('submitReasonButton');
+    newSubmitButton.addEventListener('click', submitCallback);
+
+    modal.style.display = 'block'; // 显示弹窗
+}
+
+// 点击图片触发弹窗
+headerImage.addEventListener('click', () => {
+    openModal(
+        '对熊说话', // 标题
+        '熊不会告诉任何人...', // 占位符
+        '提交', // 按钮文本
+        () => {
+            const message = reasonInput.value.trim();
+            if (message) {
+                addMessage(message);
+              
+                reasonInput.value = ''; // 清空输入框
+                closeModal(); // 关闭弹窗
+            } else {
+                alert('熊没听见');
+            }
+        }
+    );
+});
 // 在生死簿上添加消息并上传到 Firebase
 function addMessage(message) {
     const messageBoard = document.getElementById("message-board");
