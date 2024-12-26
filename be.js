@@ -230,7 +230,8 @@ function submitWords() {
     var wordsInput = document.getElementById("words-input");  // 获取输入框元素
     var message = wordsInput.value.trim(); // 获取输入的内容
     if (message) {
-        addMessage('熊说: "'+message+'"'); // 调用 addMessage 处理内容
+        const todayDate = getTodayDate();
+        addMessage(todayDate + ' 熊说:"' + message + '"' ); // 调用 addMessage 处理内容
         wordsInput.value = ''; // 清空输入框
         closeModal2(); // 关闭弹窗
     } else {
